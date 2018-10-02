@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  var routes = <String, WidgetBuilder>{
-    AddTask.routeName: (BuildContext context) => new AddTask(title: "Add Task"),
-  };
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -17,7 +13,6 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(title: 'Todo'),
       debugShowCheckedModeBanner: false,
-      routes: routes,
     );
   }
 }
@@ -155,12 +150,11 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> _todoItems = [];
 
   //This will be called each time + icon is pressed
-  void _addTodoItem() {
+  void _addTodoItem(String task) {
     //this will re render the list whenever our state is changed
-    setState(() {
-      int index = _todoItems.length;
-      _todoItems.add('Item ' + index.toString());
-    });
+    if (task.length > 0) {
+      setState(() => _todoItems.add(task));
+    }
   }
 
   Widget _buildTodoList() {
@@ -172,15 +166,53 @@ class _MyHomePageState extends State<MyHomePage> {
           number of todo items we have. So, we need to check the index is OK. */
 
           if (index < _todoItems.length) {
-            return _buildTodoItem(_todoItems[index]);
+            return _buildTodoItem(_todoItems[index], index);
           }
         }
     );
   }
 
-  Widget _buildTodoItem(String todoText) {
-    return new ListTile(
-        title: new Text(todoText)
+  // Much like _addTodoItem, this modifies the array of todo strings and
+  // notifies the app that the state has changed by using setState
+  void _removeTodoItem(int index) {
+    setState(() => _todoItems.removeAt(index));
+  }
+
+  // Show an alert dialog asking the user to confirm that the task is done
+  void _promptRemoveTodoItem(int index) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text('Mark "${_todoItems[index]}" as done?'),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    _removeTodoItem(index);
+                    Navigator.of(context).pop();
+                  },
+                  child: new Text('MARK AS DONE')
+              ),
+              new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: new Text('CANCEL')
+              )
+            ],
+          );
+        }
+    );
+  }
+
+  Widget _buildTodoItem(String todoText, int index) {
+    return new InkWell(
+      onTap: () => _promptRemoveTodoItem(index),
+      child: new Row(
+        children: <Widget>[
+          new IconButton(
+              icon: new Icon(Icons.check_circle_outline), iconSize: 22.0),
+          new Text(todoText, style: new TextStyle(fontSize: 18.0),),
+        ],
+      ),
     );
   }
 
@@ -192,58 +224,33 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _addTodoItem,
+        onPressed: _pushAddTodoScreen,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
 
-class AddTask extends StatefulWidget {
-  AddTask({Key key, this.title}) : super(key: key);
-
-  static const String routeName = "/AddTask";
-
-  final String title;
-
-  @override
-  _AddTaskState createState() => new _AddTaskState();
-}
-
-class _AddTaskState extends State<AddTask> {
-  String _value = '';
-
-  void _onSubmit(String value) {
-    setState(() {
-      _value = '${value}';
-      print(_value);
-      //Navigator.of(context).pop();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new Container(
-        padding: new EdgeInsets.all(32.0),
-        child: new Column(
-          children: <Widget>[
-            new TextField(
-              decoration: new InputDecoration(
-                labelText: 'What\'s your plan today?',
-              ),
-              autocorrect: true,
-              autofocus: true,
-              keyboardType: TextInputType.text,
-              onSubmitted: _onSubmit,
+  void _pushAddTodoScreen() {
+    Navigator.of(context).push(
+        new MaterialPageRoute(builder: (context) {
+          return new Scaffold(
+            appBar: new AppBar(
+                title: new Text('Add a new task')
             ),
-          ],
-        ),
-      ),
+            body: new TextField(
+              autofocus: true,
+              onSubmitted: (val) {
+                _addTodoItem(val);
+                Navigator.pop(context); // Close the add todo screen
+              },
+              decoration: new InputDecoration(
+                  hintText: 'Enter something to do...',
+                  contentPadding: const EdgeInsets.all(16.0)
+              ),
+            ),
+          );
+        })
     );
   }
 }
