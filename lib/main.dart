@@ -32,122 +32,155 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Padding _buildTodoList() {
-    return new Padding(
-      padding:
-          EdgeInsets.only(top: 24.0, right: 18.0, bottom: 20.0, left: 18.0),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(
-            "Upcoming",
-            style: new TextStyle(fontSize: 24.0),
-          ),
-          new Padding(padding: EdgeInsets.all(8.0)),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle_outline),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Meeting with Vikas",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle_outline),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Call CEO for meeting",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle_outline),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Eat kfc at inox",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle_outline),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Finish Flutter course",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle_outline),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Create 5 pull requests",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Padding(padding: EdgeInsets.all(8.0)),
-          new Text(
-            "Finished",
-            style: new TextStyle(fontSize: 24.0),
-          ),
-          new Padding(padding: EdgeInsets.all(8.0)),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Buy a Macbook",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Become a speaker",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-          new Row(
-            children: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.check_circle),
-                  onPressed: null,
-                  iconSize: 22.0),
-              new Text(
-                "Engage in communities",
-                style: new TextStyle(fontSize: 18.0),
-              ),
-            ],
-          ),
-        ],
-      ),
+
+//  Padding _buildTodoList() {
+//    return new Padding(
+//      padding:
+//          EdgeInsets.only(top: 24.0, right: 18.0, bottom: 20.0, left: 18.0),
+//      child: new Column(
+//        crossAxisAlignment: CrossAxisAlignment.start,
+//        children: <Widget>[
+//          new Text(
+//            "Upcoming",
+//            style: new TextStyle(fontSize: 24.0),
+//          ),
+//          new Padding(padding: EdgeInsets.all(8.0)),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle_outline),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Meeting with Vikas",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle_outline),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Call CEO for meeting",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle_outline),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Eat kfc at inox",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle_outline),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Finish Flutter course",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle_outline),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Create 5 pull requests",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Padding(padding: EdgeInsets.all(8.0)),
+//          new Text(
+//            "Finished",
+//            style: new TextStyle(fontSize: 24.0),
+//          ),
+//          new Padding(padding: EdgeInsets.all(8.0)),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Buy a Macbook",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Become a speaker",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//          new Row(
+//            children: <Widget>[
+//              new IconButton(
+//                  icon: new Icon(Icons.check_circle),
+//                  onPressed: null,
+//                  iconSize: 22.0),
+//              new Text(
+//                "Engage in communities",
+//                style: new TextStyle(fontSize: 18.0),
+//              ),
+//            ],
+//          ),
+//        ],
+//      ),
+//    );
+//  }
+
+  List<String> _todoItems = [];
+
+  //This will be called each time + icon is pressed
+  void _addTodoItem() {
+    //this will re render the list whenever our state is changed
+    setState(() {
+      int index = _todoItems.length;
+      _todoItems.add('Item ' + index.toString());
+    });
+  }
+
+  Widget _buildTodoList() {
+    return new ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+
+          /*itemBuilder will be automatically be called as many times as it takes for the
+          list to fill up its available space, which is most likely more than the
+          number of todo items we have. So, we need to check the index is OK. */
+
+          if (index < _todoItems.length) {
+            return _buildTodoItem(_todoItems[index]);
+          }
+        }
+    );
+  }
+
+  Widget _buildTodoItem(String todoText) {
+    return new ListTile(
+        title: new Text(todoText)
     );
   }
 
@@ -159,8 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
-//        onPressed: () => Navigator.pushNamed(context, AddTask.routeName),
-        onPressed: () => print('Task is added'),
+        onPressed: _addTodoItem,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -182,14 +214,6 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   String _value = '';
 
-//  void _onPressed(String value) {
-//    setState(() {
-//      _value = value;
-//      print(_value);
-//      //Navigator.of(context).pop();
-//    });
-//  }
-
   void _onSubmit(String value) {
     setState(() {
       _value = '${value}';
@@ -208,7 +232,6 @@ class _AddTaskState extends State<AddTask> {
         padding: new EdgeInsets.all(32.0),
         child: new Column(
           children: <Widget>[
-            //new RaisedButton(onPressed: () => _onPressed('Task is added'), child: new Text('Click me')),
             new TextField(
               decoration: new InputDecoration(
                 labelText: 'What\'s your plan today?',
