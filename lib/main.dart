@@ -227,7 +227,21 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _pushAddTodoScreen,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        elevation: 4.0,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(icon: Icon(Icons.home), iconSize: 25.0,),
+            IconButton(icon: Icon(Icons.show_chart), iconSize: 25.0,),
+            new Text(''),
+            IconButton(icon: Icon(Icons.tab), iconSize: 25.0,),
+            IconButton(icon: Icon(Icons.settings), iconSize: 25.0,)
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
