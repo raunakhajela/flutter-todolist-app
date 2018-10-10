@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 void main() => runApp(new MyApp());
 
@@ -28,124 +30,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-//  Padding _buildTodoList() {
-//    return new Padding(
-//      padding:
-//          EdgeInsets.only(top: 24.0, right: 18.0, bottom: 20.0, left: 18.0),
-//      child: new Column(
-//        crossAxisAlignment: CrossAxisAlignment.start,
-//        children: <Widget>[
-//          new Text(
-//            "Upcoming",
-//            style: new TextStyle(fontSize: 24.0),
-//          ),
-//          new Padding(padding: EdgeInsets.all(8.0)),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle_outline),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Meeting with Vikas",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle_outline),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Call CEO for meeting",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle_outline),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Eat kfc at inox",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle_outline),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Finish Flutter course",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle_outline),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Create 5 pull requests",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Padding(padding: EdgeInsets.all(8.0)),
-//          new Text(
-//            "Finished",
-//            style: new TextStyle(fontSize: 24.0),
-//          ),
-//          new Padding(padding: EdgeInsets.all(8.0)),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Buy a Macbook",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Become a speaker",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//          new Row(
-//            children: <Widget>[
-//              new IconButton(
-//                  icon: new Icon(Icons.check_circle),
-//                  onPressed: null,
-//                  iconSize: 22.0),
-//              new Text(
-//                "Engage in communities",
-//                style: new TextStyle(fontSize: 18.0),
-//              ),
-//            ],
-//          ),
-//        ],
-//      ),
-//    );
-//  }
+  final _controller_key = TextEditingController();
+  final _controller_data = TextEditingController();
+
+  String text_to_show = '';
 
   List<String> _todoItems = [];
 
@@ -209,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: new Row(
         children: <Widget>[
           new IconButton(
-              icon: new Icon(Icons.check_circle_outline), iconSize: 22.0),
+            icon: new Icon(Icons.check_circle_outline),
+            iconSize: 22.0,
+            onPressed: null,),
           new Text(todoText, style: new TextStyle(fontSize: 18.0),),
         ],
       ),
@@ -233,11 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            IconButton(icon: Icon(Icons.home), iconSize: 25.0,),
-            IconButton(icon: Icon(Icons.show_chart), iconSize: 25.0,),
+            IconButton(
+              icon: Icon(Icons.home), iconSize: 25.0, onPressed: null,),
+            IconButton(
+              icon: Icon(Icons.show_chart), iconSize: 25.0, onPressed: null,),
             new Text(''),
-            IconButton(icon: Icon(Icons.tab), iconSize: 25.0,),
-            IconButton(icon: Icon(Icons.settings), iconSize: 25.0,)
+            IconButton(icon: Icon(Icons.tab), iconSize: 25.0, onPressed: null,),
+            IconButton(
+              icon: Icon(Icons.settings), iconSize: 25.0, onPressed: null,)
           ],
         ),
       ),
@@ -252,19 +145,72 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: new AppBar(
                 title: new Text('Add a new task')
             ),
-            body: new TextField(
-              autofocus: true,
-              onSubmitted: (val) {
-                _addTodoItem(val);
-                Navigator.pop(context); // Close the add todo screen
-              },
-              decoration: new InputDecoration(
-                  hintText: 'Enter something to do...',
-                  contentPadding: const EdgeInsets.all(16.0)
-              ),
+            body: Column(
+              children: <Widget>[
+                new TextField(
+                  controller: _controller_key,
+                  autofocus: true,
+                  onSubmitted: (val) {
+                    _addTodoItem(val);
+                    Navigator.pop(context); // Close the add todo screen
+                  },
+                  decoration: new InputDecoration(
+                      hintText: 'Enter key...',
+                      contentPadding: const EdgeInsets.all(16.0)
+                  ),
+                ),
+                new TextField(
+                  controller: _controller_data,
+                  autofocus: true,
+                  onSubmitted: (val) {
+                    _addTodoItem(val);
+                    Navigator.pop(context); // Close the add todo screen
+                  },
+                  decoration: new InputDecoration(
+                      hintText: 'Enter data...',
+                      contentPadding: const EdgeInsets.all(16.0)
+                  ),
+                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new RaisedButton(
+                        onPressed: () =>
+                            saveData(
+                                _controller_key.text, _controller_data.text),
+                        child: new Text('Save Data'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new RaisedButton(
+                        onPressed: () => readData(_controller_key.text),
+                        child: new Text('Read Data'),
+                      ),
+                    ),
+                    Text('$text_to_show'),
+                  ],
+                ),
+              ],
             ),
           );
         })
     );
+  }
+
+  Future saveData(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString(key, value);
+  }
+
+  Future readData(String text) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      text_to_show = prefs.getString(text);
+    });
   }
 }
